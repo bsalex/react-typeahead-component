@@ -85,6 +85,10 @@ module.exports = React.createClass({
         };
     },
 
+    componentDidUpdate: function() {
+        this.inputOffset = $(ReactDOM.findDOMNode(this)).find('.react-typeahead-input').offset();
+    },
+
     componentWillMount: function() {
         var _this = this,
             uniqueId = this.props.inputId || this.constructor.getInstanceCount();
@@ -220,44 +224,53 @@ module.exports = React.createClass({
             return null;
         }
 
+        var style = {
+            width: '100%',
+            background: '#fff',
+            position: 'absolute',
+            boxSizing: 'border-box',
+            display: isDropdownVisible ? 'block' : 'none'
+        };
+
+        if (this.inputOffset) {
+            style.left = this.inputOffset.left;
+            style.top = this.inputOffset.top + 25;
+        }
+
         return (
-            <ul id={_this.optionsId}
-                ref='dropdown'
-                role='listbox'
-                aria-hidden={!isDropdownVisible}
-                style={{
-                    width: '100%',
-                    background: '#fff',
-                    position: 'absolute',
-                    boxSizing: 'border-box',
-                    display: isDropdownVisible ? 'block' : 'none'
-                }}
-                className='react-typeahead-options'
-                onMouseOut={this.handleMouseOut}>
-                {
-                    props.options.map(function(data, index) {
-                        var isSelected = selectedIndex === index;
+            <RenderInBody>
+                <ul id={_this.optionsId}
+                    ref='dropdown'
+                    role='listbox'
+                    aria-hidden={!isDropdownVisible}
+                    style={style}
+                    className='react-typeahead-options'
+                    onMouseOut={this.handleMouseOut}>
+                    {
+                        props.options.map(function(data, index) {
+                            var isSelected = selectedIndex === index;
 
-                        return (
-                            <li id={isSelected ? activeDescendantId : null}
-                                aria-selected={isSelected}
-                                role='option'
-                                key={index}
-                                onClick={_this.handleOptionClick.bind(_this, index)}
-                                onMouseOver={_this.handleOptionMouseOver.bind(_this, index)}>
+                            return (
+                                <li id={isSelected ? activeDescendantId : null}
+                                    aria-selected={isSelected}
+                                    role='option'
+                                    key={index}
+                                    onClick={_this.handleOptionClick.bind(_this, index)}
+                                    onMouseOver={_this.handleOptionMouseOver.bind(_this, index)}>
 
-                                <OptionTemplate
-                                    data={data}
-                                    index={index}
-                                    userInputValue={_this.userInputValue}
-                                    inputValue={props.inputValue}
-                                    isSelected={isSelected}
-                                />
-                            </li>
-                        );
-                    })
-                }
-            </ul>
+                                    <OptionTemplate
+                                        data={data}
+                                        index={index}
+                                        userInputValue={_this.userInputValue}
+                                        inputValue={props.inputValue}
+                                        isSelected={isSelected}
+                                    />
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            </RenderInBody>
         );
     },
 
@@ -508,4 +521,37 @@ module.exports = React.createClass({
             _this.hideDropdown();
         }
     }
+});
+
+
+var RenderInBody = React.createClass({
+
+    componentDidMount: function () {
+        this.popup = document.createElement("div");
+        document.body.appendChild(this.popup);
+        this._renderLayer();
+    },
+
+
+    componentDidUpdate: function () {
+        this._renderLayer();
+    },
+
+
+    componentWillUnmount: function () {
+        ReactDOM.unmountComponentAtNode(this.popup);
+        document.body.removeChild(this.popup);
+    },
+
+
+    _renderLayer: function () {
+        ReactDOM.render(this.props.children, this.popup);
+    },
+
+
+    render: function () {
+        // Render a placeholder
+        return React.DOM.div(this.props);
+    }
+
 });
