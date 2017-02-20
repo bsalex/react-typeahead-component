@@ -298,7 +298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    componentDidMount: function () {
 	        var addEvent = window.addEventListener,
-	            handleWindowClose = this.handleWindowClose;
+	            handleWindowClose = this.props.handleWindowClose || this.handleWindowClose;
 
 	        // The `focus` event does not bubble, so we must capture it instead.
 	        // This closes Typeahead's dropdown whenever something else gains focus.
@@ -310,7 +310,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    componentWillUnmount: function () {
 	        var removeEvent = window.removeEventListener,
-	            handleWindowClose = this.handleWindowClose;
+	            handleWindowClose = this.props.handleWindowClos || this.handleWindowClose;
 
 	        removeEvent('focus', handleWindowClose, true);
 	        removeEvent('click', handleWindowClose, false);
