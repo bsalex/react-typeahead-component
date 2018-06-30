@@ -1,13 +1,15 @@
 'use strict';
 
 var React = require('react'),
-    ReactDOM = require('react-dom');
+    ReactDOM = require('react-dom'),
+    PropTypes = require('prop-types'),
+    createReactClass = require('create-react-class');
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'Aria Status',
 
     propTypes: process.env.NODE_ENV === 'production' ? {} : {
-        message: React.PropTypes.string
+        message: PropTypes.string
     },
 
     componentDidMount: function() {

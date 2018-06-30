@@ -2,12 +2,14 @@
 
 var React = require('react'),
     ReactDOM = require('react-dom'),
+    PropTypes = require('prop-types'),
     Input = require('./input'),
     AriaStatus = require('./aria_status'),
     getTextDirection = require('../utils/get_text_direction'),
-    noop = function() {};
+    noop = function() {},
+    createReactClass = require('create-react-class');
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'Typeahead',
 
     statics: {
@@ -21,31 +23,31 @@ module.exports = React.createClass({
     },
 
     propTypes: process.env.NODE_ENV === 'production' ? {} : {
-        inputId: React.PropTypes.string,
-        inputName: React.PropTypes.string,
-        className: React.PropTypes.string,
-        autoFocus: React.PropTypes.bool,
-        hoverSelect: React.PropTypes.bool,
-        inputValue: React.PropTypes.string,
-        options: React.PropTypes.array,
-        placeholder: React.PropTypes.string,
-        onChange: React.PropTypes.func,
-        onKeyDown: React.PropTypes.func,
-        onKeyPress: React.PropTypes.func,
-        onKeyUp: React.PropTypes.func,
-        onFocus: React.PropTypes.func,
-        onBlur: React.PropTypes.func,
-        onSelect: React.PropTypes.func,
-        onInputClick: React.PropTypes.func,
-        handleHint: React.PropTypes.func,
-        onComplete: React.PropTypes.func,
-        onOptionClick: React.PropTypes.func,
-        onOptionChange: React.PropTypes.func,
-        onDropdownOpen: React.PropTypes.func,
-        onDropdownClose: React.PropTypes.func,
-        optionTemplate: React.PropTypes.func.isRequired,
-        getMessageForOption: React.PropTypes.func,
-        getMessageForIncomingOptions: React.PropTypes.func
+        inputId: PropTypes.string,
+        inputName: PropTypes.string,
+        className: PropTypes.string,
+        autoFocus: PropTypes.bool,
+        hoverSelect: PropTypes.bool,
+        inputValue: PropTypes.string,
+        options: PropTypes.array,
+        placeholder: PropTypes.string,
+        onChange: PropTypes.func,
+        onKeyDown: PropTypes.func,
+        onKeyPress: PropTypes.func,
+        onKeyUp: PropTypes.func,
+        onFocus: PropTypes.func,
+        onBlur: PropTypes.func,
+        onSelect: PropTypes.func,
+        onInputClick: PropTypes.func,
+        handleHint: PropTypes.func,
+        onComplete: PropTypes.func,
+        onOptionClick: PropTypes.func,
+        onOptionChange: PropTypes.func,
+        onDropdownOpen: PropTypes.func,
+        onDropdownClose: PropTypes.func,
+        optionTemplate: PropTypes.func.isRequired,
+        getMessageForOption: PropTypes.func,
+        getMessageForIncomingOptions: PropTypes.func
     },
 
     getDefaultProps: function() {
@@ -86,7 +88,7 @@ module.exports = React.createClass({
     },
 
     componentDidUpdate: function() {
-        this.inputOffset = $(ReactDOM.findDOMNode(this)).find('.react-typeahead-input').offset();
+        this.inputOffset = ReactDOM.findDOMNode(this).querySelector('.react-typeahead-input').getBoundingClientRect();
     },
 
     componentWillMount: function() {
@@ -524,7 +526,7 @@ module.exports = React.createClass({
 });
 
 
-var RenderInBody = React.createClass({
+var RenderInBody = createReactClass({
 
     componentDidMount: function () {
         this.popup = document.createElement("div");
@@ -551,7 +553,6 @@ var RenderInBody = React.createClass({
 
     render: function () {
         // Render a placeholder
-        return React.DOM.div(this.props);
+        return React.createElement("div", this.props);
     }
-
 });

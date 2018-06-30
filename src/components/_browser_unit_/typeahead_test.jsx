@@ -2,8 +2,9 @@
 
 var React = require('react'),
     ReactDOM = require('react-dom'),
-    TestUtils = require('react-addons-test-utils'),
-    Typeahead = require('../typeahead');
+    TestUtils = require('react-dom/test-utils'),
+    Typeahead = require('../typeahead'),
+    createReactClass = require('create-react-class');
 
 describe('Typeahead', function() {
     // This is only required for tests which use `setSelectionRange`.
@@ -349,7 +350,7 @@ describe('Typeahead', function() {
         });
 
         it('should increment and decrement the selected index if we navigate down and up respectively', function() {
-            var OptionTemplate = React.createClass({
+            var OptionTemplate = createReactClass({
                     render: function() {
                         return <p>{this.props.data}</p>
                     }
@@ -369,7 +370,7 @@ describe('Typeahead', function() {
         });
 
         it('should wrap the selected index if we navigate up before the input and down past the last item respectively', function() {
-            var OptionTemplate = React.createClass({
+            var OptionTemplate = createReactClass({
                     render: function() {
                         return <p>{this.props.data}</p>
                     }
@@ -854,7 +855,7 @@ describe('Typeahead', function() {
         describe('ArrowDown/ArrowUp', function() {
             it('should show the dropdown if there is `options`', function() {
                  var handleChange = sinon.spy(),
-                    OptionTemplate = React.createClass({
+                    OptionTemplate = createReactClass({
                         render: function() {
                             return <p>{this.props.data}</p>
                         }
@@ -962,7 +963,7 @@ describe('Typeahead', function() {
 
         it('should call `onOptionChange` with the correct values if we arrow down and up respectively', function() {
             var handleOptionChange = sinon.spy(),
-                OptionTemplate = React.createClass({
+                OptionTemplate = createReactClass({
                     render: function() {
                         return <p>{this.props.data}</p>
                     }
@@ -995,7 +996,7 @@ describe('Typeahead', function() {
 
         it('should wrap and call `onOptionChange` if we arrow up before the input and down past the last item respectively', function() {
             var handleOptionChange = sinon.spy(),
-                OptionTemplate = React.createClass({
+                OptionTemplate = createReactClass({
                     render: function() {
                         return <p>{this.props.data}</p>
                     }
@@ -1109,7 +1110,7 @@ describe('Typeahead', function() {
 
         it('should pass the event object to `onOptionClick` if passed in', function() {
             var handleOptionClick = sinon.spy(),
-                OptionTemplate = React.createClass({
+                OptionTemplate = createReactClass({
                     render: function() {
                         return <p>{this.props.data}</p>
                     }

@@ -14,6 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+        './node_modules/babel-polyfill/dist/polyfill.js',
         './test/polyfill/*.js',
         './test/all.js'
     ],
@@ -69,12 +70,12 @@ module.exports = function(config) {
     webpack: {
         devtool: "inline-source-map",
         module: {
-            loaders: [
+            rules: [
             { test: /\.(js|jsx)$/, loaders: ['babel-loader'], exclude: /node_modules/ }
             ]
         },
         resolve: {
-            extensions: ["", ".js", ".jsx"]
+            extensions: ["*", ".js", ".jsx"]
         }
     },
 

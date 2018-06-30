@@ -20,8 +20,8 @@ module.exports = {
     'react-dom': reactDomExternal
   },
   module: {
-    loaders: [
-      { test: /\.(js|jsx)$/, loaders: ['babel-loader'], exclude: /node_modules/ }
+    rules: [
+      { test: /\.(js|jsx)$/, use: ['babel-loader'], exclude: /node_modules/ }
     ]
   },
   output: {
@@ -29,6 +29,6 @@ module.exports = {
     libraryTarget: 'umd'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx']
   }
 };
